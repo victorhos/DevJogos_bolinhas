@@ -13,7 +13,7 @@ window.onload = function() {
 
 	function preload() {
 
-    	game.load.spritesheet('balls', 'assets/sprites/balls.png', 17, 17);
+    	game.load.spritesheet('balls', 'balls.png', 17, 17);
 
 	}
 
