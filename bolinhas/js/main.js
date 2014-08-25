@@ -13,7 +13,7 @@ window.onload = function() {
 
 	function preload() {
 
-    	game.load.spritesheet('balls', 'balls.png', 17, 17);
+    	game.load.spritesheet('balls', 'img/balls.png', 17, 17);
 
 	}
 
@@ -127,11 +127,9 @@ window.onload = function() {
 		{
 			game.context.fillStyle = 'rgb(255,0,255)';
 			//game.context.fillRect(p.x - 2, p.y - 2, 5, 5);
-			console.log('entrou');
 		}
 		else
 		{
-			console.log('passou')
 		}
 
 		game.debug.text("Drag the bolinhas", 32, 550);
