@@ -1,4 +1,3 @@
-window.onload = function() {
 
 	var game = new Phaser.Game(
 								800, 
@@ -17,6 +16,9 @@ window.onload = function() {
 
 	}
 
+	var list_line = {};
+	var list_ball = {};
+
 	var bolinha1;
 	var bolinha2;
 	var bolinha3;
@@ -27,9 +29,27 @@ window.onload = function() {
 	var line3;
 	var line4;
 
+	function createElements(qtd){
+	
+		for (var i = 0; i < qtd; i++){
+
+			list_ball['bolinha' + i] = game.add.sprite(100*i, 100*i, 'balls', 0);
+
+		}
+
+	}
+
 	function create() {
 
 		game.stage.backgroundColor = '#124184';
+
+		for (var i = 0; i < qtd; i++){
+		
+			list_ball['bolinha' + i].anchor.set(0.5);
+			list_ball['bolinha' + i].inputEnabled = true;
+			list_ball['bolinha' + i].input.enableDrag(true);
+
+		}
 
 		bolinha1 = game.add.sprite(100, 200, 'balls', 0);
 		bolinha1.anchor.set(0.5);
@@ -143,4 +163,3 @@ window.onload = function() {
 		game.debug.text("Drag the bolinhas", 32, 550);
 
 	}
-};
