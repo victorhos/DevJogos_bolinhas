@@ -1,7 +1,7 @@
 
     var game = new Phaser.Game(
                                 800, 
-                                600, 
+                                800, 
                                 Phaser.CANVAS, 
                                 'phaser-example', 
                                 { preload: preload, 
@@ -23,6 +23,20 @@
     var qtd = undefined;
     var c = 'rgb(255,255,255)';
 
+    function randomNumberWithLimit(limit){
+
+        var number = undefined;
+
+        do {
+            number = Math.floor(Math.random()* 1000);
+console.log(number < 0,  number > limit, number, limit);
+        }
+        while ((number < 0) && (number > limit))
+console.log(number);
+        return number
+
+    }
+
     //Funcao que cria as bolinhas
     function createElements(qtd_elements){
         
@@ -30,7 +44,11 @@
 
 		for (var i = 0; i <= qtd; i++){
 
-			list_ball['bolinha' + i] = game.add.sprite(10*i, 10*i, 'balls', 0);
+			list_ball['bolinha' + i] = game.add.sprite(
+                                            randomNumberWithLimit(600), 
+                                            randomNumberWithLimit(600), 
+                                            'balls', 
+                                            0);
 
 		}
 
@@ -39,8 +57,7 @@
 	function create() {
 
         game.stage.backgroundColor = '#124184';
-        createElements(8);
-        qtd = 8;
+        createElements(5);
 
         //colocando as bolinhas na tela
         for (var i = 0; i <= qtd; i++){
@@ -125,7 +142,7 @@
 
     function render() {
 
-        //create lines 
+        //render lines 
         for (var i = 0; i <= qtd; i++){
 
             game.debug.geom(list_line['line' + i], c);
