@@ -124,13 +124,6 @@ window.onload = function() {
 		game.debug.geom(line3, c);
 		game.debug.geom(line4, c);
 
-
-		game.debug.lineInfo(line1, 32, 32);
-		game.debug.lineInfo(line2, 32, 100);
-		game.debug.lineInfo(line3, 32, 200);
-		game.debug.lineInfo(line4, 32, 300);
-
-
 		if (p12 && p13 && p14 && p21 && p23 && p24 && p31 
 									&& p32 && p34 && p41 && p42 && p43){
 			game.context.fillStyle = 'rgb(255,0,255)';

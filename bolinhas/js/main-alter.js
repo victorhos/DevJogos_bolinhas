@@ -56,7 +56,7 @@
 	function create() {
 
         game.stage.backgroundColor = '#124184';
-        createElements(25);
+        createElements(4);
 
         //colocando as bolinhas na tela
         for (var i = 0; i <= qtd; i++){
@@ -108,7 +108,7 @@
                                             false);
             }
         }
-	}
+    }
 
     function update() {
 
@@ -130,10 +130,22 @@
                                         false);
             }
         }
-
+        console.clear()
         //create line intersects
+        for (var i in list_line){
 
+            for (var x in list_line) {
 
+                if (x != i){
+                    list_intersects['p' + i + x] = list_line[i].intersects(
+                        list_line[x], 
+                        true
+                    );
+                }
+
+            }
+            console.log(i, list_line[i].intersects(list_line[x],true));
+        }
 
 
 
