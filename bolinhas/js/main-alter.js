@@ -19,39 +19,10 @@
 	//Criando variaveis auxiliares
     var list_line = {};
     var list_ball = {};
+    var list_bridge = {};
     var list_intersects = {};
-    var qtd = undefined;
+    var qtd;
     var c = 'rgb(255,255,255)';
-
-    function randomNumberWithLimit(start, limit){
-
-        var number = undefined;
-
-        do {
-            number = Math.floor(Math.random()* 1000);
-        }
-        while ((number < start) || (number > limit))
-
-        return number
-
-    }
-
-    //Funcao que cria as bolinhas
-    function createElements(qtd_elements){
-        
-        qtd = qtd_elements;
-
-		for (var i = 0; i <= qtd; i++){
-
-			list_ball['bolinha' + i] = game.add.sprite(
-                                            randomNumberWithLimit(100, 600), 
-                                            randomNumberWithLimit(100, 600), 
-                                            'balls', 
-                                            0);
-
-		}
-
-	}
 
 	function create() {
 
@@ -61,9 +32,9 @@
         //colocando as bolinhas na tela
         for (var i = 0; i <= qtd; i++){
 
-        list_ball['bolinha' + i].anchor.set(0.5);
-        list_ball['bolinha' + i].inputEnabled = true;
-        list_ball['bolinha' + i].input.enableDrag(true);
+            list_ball['bolinha' + i].anchor.set(0.5);
+            list_ball['bolinha' + i].inputEnabled = true;
+            list_ball['bolinha' + i].input.enableDrag(true);
 
         }
 
@@ -130,7 +101,7 @@
                                         false);
             }
         }
-        console.clear()
+        //console.clear()
         //create line intersects
         for (var i in list_line){
 
@@ -144,10 +115,8 @@
                 }
 
             }
-            console.log(i, list_line[i].intersects(list_line[x],true));
+            //console.log(i, list_line[i].intersects(list_line[x],true));
         }
-
-
 
     }
 
