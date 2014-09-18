@@ -5,7 +5,7 @@ function randomNumberWithLimit(start, limit){
 
     do {
         number = Math.floor(Math.random() * limit);
-    }
+   
     while ((number < start) || (number > limit))
 
     return number
@@ -58,30 +58,3 @@ function createBridge(){
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
