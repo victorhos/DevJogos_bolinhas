@@ -20,10 +20,11 @@ function createElements(qtd_elements){
     for (var i = 0; i <= qtd; i++){
 
         list_ball['bolinha' + i] = game.add.sprite(
-                                        randomNumberWithLimit(100, 600), 
-                                        randomNumberWithLimit(100, 600), 
-                                        'balls', 
-                                        0);
+            randomNumberWithLimit(100, 600), 
+            randomNumberWithLimit(100, 600), 
+            'balls', 
+            0
+        );
 
     }
 
