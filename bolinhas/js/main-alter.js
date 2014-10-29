@@ -29,14 +29,16 @@
 
       }
 
+      return true
+
   }
 
   function createBridge(){
 
       for (i in list_ball){
 
-          var list = list_bridge['bridge' + i];
-              list = [];
+          var posicao = 'bridge' + i.replace('bolinha', '');
+          list_bridge[posicao] = [];
 
           //limite qtd de ligações 
           var limit = qtd - 1;
@@ -58,12 +60,19 @@
                   number = Math.floor(Math.random() * limit);
               }
               //verifica se já existe na lista e se não é ele mesmo
-              while ( number == i && list.indexOf( number ) == -1 );
-              list.push(number);
+              while ( 
+                number == i && 
+                list_bridge[posicao].indexOf( number ) != -1 
+              );
+
+              list_bridge[posicao].push(number);
+              qtd_ligacoes = qtd_ligacoes + 1;
 
           }
 
       }
+
+      return true
 
   }
 /* Fim Funcões auxiliares */
@@ -93,6 +102,7 @@ var list_ball = {};
 var list_bridge = {};
 var list_intersects = {};
 var qtd = 4;
+var qtd_ligacoes = 0;
 var c = 'rgb(255,255,255)';
 
 function create() {
@@ -111,21 +121,29 @@ function create() {
     }
 
     //Criando as linhas
-    for (var i = 0; i <= qtd; i++){
+    for ( var i in list_bridge ){
+
+        list_bridge 
+
+        for ( var j in list_bridge ){
 
         
 
-        list_line['line' + i] = new Phaser.Line(
-            list_ball['bolinha' + i].x, 
-            list_ball['bolinha' + i].y, 
-            list_ball['bolinha' + (i + 1)].x, 
-            list_ball['bolinha' + (i + 1)].y
-        );
+        }
 
+        /* example
+        list_line['line' + i] = new Phaser.Line(
+            list_bridge['bolinha' + i].x, 
+            list_bridge['bolinha' + i].y, 
+            list_bridge['bolinha' + (i + 1)].x, 
+            list_bridge['bolinha' + (i + 1)].y
+        );
+        */
 
     }
 
     //escrevendo as linhas na tela
+    /*
     for (var i = 0; i <= qtd; i++){
 
         if ( i < qtd){
@@ -145,6 +163,8 @@ function create() {
             );
         }
     }
+    */
+
 }
 
 function update() {
