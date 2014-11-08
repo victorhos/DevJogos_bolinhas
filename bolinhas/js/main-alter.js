@@ -123,26 +123,48 @@ function create() {
     //Criando as linhas
     for ( var i in list_bridge ){
 
-        list_bridge 
+        var posicao_line = 'line' + i.replace('bridge', '');
+        var posicao_ball = 'bolinha' + i.replace('bridge', '');
+        var posicao_bridge = i;
 
-        for ( var j in list_bridge ){
+        list_line[posicao_line] = []
 
-        
+        for ( var j in list_bridge[posicao_bridge] ){
+
+            var ligacao_ball = list_bridge[posicao_bridge][j];
+                ligacao_ball = 'bolinha' + ligacao_ball;
+
+            list_line[posicao_line].push(
+                new Phaser.Line(
+                    list_ball[posicao_ball].x, 
+                    list_ball[posicao_ball].y, 
+                    list_ball[ligacao_ball].x, 
+                    list_ball[ligacao_ball].y
+                )
+            );
 
         }
 
-        /* example
-        list_line['line' + i] = new Phaser.Line(
-            list_bridge['bolinha' + i].x, 
-            list_bridge['bolinha' + i].y, 
-            list_bridge['bolinha' + (i + 1)].x, 
-            list_bridge['bolinha' + (i + 1)].y
-        );
-        */
-
     }
 
+console.log(list_line);
+
     //escrevendo as linhas na tela
+
+    for ( var i in list_line ){
+
+console.log('i', i);
+
+        var line_base = i.replace('line', '');
+console.log('line_base', line_base);
+
+        for ( var j in list_line[i] ){
+console.log('j', j);
+
+        }
+
+
+    }
     /*
     for (var i = 0; i <= qtd; i++){
 
@@ -154,17 +176,9 @@ function create() {
                 false
             );
         }
-        else{
 
-            list_line['line' + i].fromSprite(
-                list_ball['bolinha' + i], 
-                list_ball['bolinha0'], 
-                false
-            );
-        }
     }
     */
-
 }
 
 function update() {
