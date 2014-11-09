@@ -101,7 +101,7 @@ var list_line = {};
 var list_ball = {};
 var list_bridge = {};
 var list_intersects = {};
-var qtd = 4;
+var qtd = 7;
 var qtd_ligacoes = 0;
 var c = 'rgb(255,255,255)';
 
@@ -134,75 +134,46 @@ function create() {
             var ligacao_ball = list_bridge[posicao_bridge][j];
                 ligacao_ball = 'bolinha' + ligacao_ball;
 
-            list_line[posicao_line].push(
-                new Phaser.Line(
+            var x = {};
+
+            //Criando linha
+            x['line'] = new Phaser.Line(
                     list_ball[posicao_ball].x, 
                     list_ball[posicao_ball].y, 
                     list_ball[ligacao_ball].x, 
                     list_ball[ligacao_ball].y
-                )
             );
 
+            x['ballA'] = posicao_ball;
+            x['ballB'] = ligacao_ball;
+
+            list_line[posicao_line].push(x);
+
         }
 
     }
 
-console.log(list_line);
-
-    //escrevendo as linhas na tela
-
-    for ( var i in list_line ){
-
-console.log('i', i);
-
-        var line_base = i.replace('line', '');
-console.log('line_base', line_base);
-
-        for ( var j in list_line[i] ){
-console.log('j', j);
-
-        }
-
-
-    }
-    /*
-    for (var i = 0; i <= qtd; i++){
-
-        if ( i < qtd){
-
-            list_line['line' + i].fromSprite(
-                list_ball['bolinha' + i], 
-                list_ball['bolinha' + (i + 1)], 
-                false
-            );
-        }
-
-    }
-    */
 }
 
 function update() {
 
     //create fromSprite
-    for (var i = 0; i <= qtd; i++){
+    for ( var x in list_line ){
 
-        if ( i < qtd){
-            list_line['line' + i].fromSprite(
-                list_ball['bolinha' + i],
-                list_ball['bolinha' + (i + 1)], 
+        for ( var y in list_line[x] ){
+
+            list_line[x][y].line.fromSprite(
+                list_ball[list_line[x][y].ballA], 
+                list_ball[list_line[x][y].ballB],
                 false
             );
+
         }
-        else{
-            list_line['line' + i].fromSprite(
-                list_ball['bolinha' + i], 
-                list_ball['bolinha0'], 
-                false
-            );
-        }
+
     }
-    //console.clear()
+
     //create line intersects
+    /*
     for (var i in list_line){
 
         for (var x in list_line) {
@@ -217,17 +188,31 @@ function update() {
         }
         //console.log(i, list_line[i].intersects(list_line[x],true));
     }
+    */
 
 }
 
 function render() {
 
+    // Renderiza linhas
+    for ( var x in list_line ){
+
+        for ( var y in list_line[x] ){
+
+            game.debug.geom(list_line[x][y].line, c);
+
+        }
+
+    }
+
     //render lines 
+    /*
     for (var i = 0; i <= qtd; i++){
 
         game.debug.geom(list_line['line' + i], c);
 
     }
+    */
 
     game.debug.text("Drag the bolinhas", 32, 550);
 

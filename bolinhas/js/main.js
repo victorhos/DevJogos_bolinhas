@@ -135,5 +135,6 @@ window.onload = function() {
 
 		game.debug.text("Drag the bolinhas", 32, 550);
 
+
 	}
 };
