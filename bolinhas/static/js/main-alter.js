@@ -75,41 +75,8 @@
       return true
 
   }
-/* Fim Funcões auxiliares */
 
-var game = new Phaser.Game(
-    800, 
-    700, 
-    Phaser.CANVAS, 
-    'phaser-example', 
-    {
-        preload: preload, 
-        create: create, 
-        update: update, 
-        render: render
-    }
-);
-
-function preload() {
-
-    game.load.spritesheet('balls', 'img/balls.png', 17, 17);
-
-}
-
-//Criando variaveis auxiliares
-var list_line = {};
-var list_ball = {};
-var list_bridge = {};
-var list_intersects = {};
-var qtd = 7;
-var qtd_ligacoes = 0;
-var c = 'rgb(255,255,255)';
-
-function create() {
-
-    game.stage.backgroundColor = '#124184';
-    createElements(qtd);
-    createBridge();
+  function setBolinhaNaTela(){
 
     //colocando as bolinhas na tela
     for (var i = 0; i <= qtd; i++){
@@ -119,6 +86,10 @@ function create() {
         list_ball['bolinha' + i].input.enableDrag(true);
 
     }
+
+  }
+
+  function criaLinhasEEscreve(){
 
     //Criando as linhas
     for ( var i in list_bridge ){
@@ -153,11 +124,10 @@ function create() {
 
     }
 
-}
+  }
 
-function update() {
+  function updateCreateFromSprite(){
 
-    //create fromSprite
     for ( var x in list_line ){
 
         for ( var y in list_line[x] ){
@@ -172,29 +142,10 @@ function update() {
 
     }
 
-    //create line intersects
-    /*
-    for (var i in list_line){
+  }
 
-        for (var x in list_line) {
+  function renderLines(){
 
-            if (x != i){
-                list_intersects['p' + i + x] = list_line[i].intersects(
-                    list_line[x], 
-                    true
-                );
-            }
-
-        }
-        //console.log(i, list_line[i].intersects(list_line[x],true));
-    }
-    */
-
-}
-
-function render() {
-
-    // Renderiza linhas
     for ( var x in list_line ){
 
         for ( var y in list_line[x] ){
@@ -205,15 +156,65 @@ function render() {
 
     }
 
-    //render lines 
-    /*
-    for (var i = 0; i <= qtd; i++){
+  }
 
-        game.debug.geom(list_line['line' + i], c);
+/* Fim Funcões auxiliares */
 
+var game = new Phaser.Game(
+    800, 
+    700, 
+    Phaser.CANVAS, 
+    'phaser-example', 
+    {
+        preload: preload, 
+        create: create, 
+        update: update, 
+        render: render
     }
-    */
+);
 
-    game.debug.text("Drag the bolinhas", 32, 550);
+function preload() {
+
+    game.load.spritesheet(
+        'balls', 
+        'img/balls.png', 
+        17, 
+        17
+    );
+
+}
+
+//Criando variaveis auxiliares
+var list_line = {};
+var list_ball = {};
+var list_bridge = {};
+var list_intersects = {};
+var qtd = 7;
+var qtd_ligacoes = 0;
+var c = 'rgb(255,255,255)';
+
+function create() {
+
+    game.stage.backgroundColor = '#124184';
+    createElements(qtd);
+    createBridge();
+    //colocando as bolinhas na tela
+    setBolinhaNaTela();
+    //Criando as linhas
+    criaLinhasEEscreve();
+
+}
+
+function update() {
+
+    //create fromSprite
+    updateCreateFromSprite();
+
+}
+
+function render() {
+
+    // Renderiza linhas
+    renderLines();
 
 }
