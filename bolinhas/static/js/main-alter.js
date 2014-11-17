@@ -175,7 +175,7 @@ var game = new Phaser.Game(
 
 function preload() {
 
-    game.load.spritesheet('balls', 'static/img/balls.png', 17, 17);
+    game.load.spritesheet('balls', 'static/img/bolinhas20x20.png', 20, 20);
     game.load.spritesheet('splash', 'static/img/splash.png', 800, 700);
 
 }
@@ -185,15 +185,18 @@ var list_line = {};
 var list_ball = {};
 var list_bridge = {};
 var list_intersects = {};
-var qtd = 70;
+var qtd = 5;
 var qtd_ligacoes = 0;
 var c = 'rgb(255,255,255)';
 var splash;
 
+
+var lista_de_bolinhas = [];
+
 function create() {
 
     game.stage.backgroundColor = '#124184';
-    game.add.sprite(0, 0, 'splash');
+    //game.add.sprite(0, 0, 'splash');
 
     //Start do jogo
     /*
@@ -202,17 +205,25 @@ function create() {
     setBolinhaNaTela();
     criaLinhasEEscreve();
     */
+    console.log(level.nivel1.qtd);
+    for ( var i = 0; i < level.nivel1.qtd; i++ ) {
+console.log(i);
+        var bolinha = new Ball( i, game, 1);
+        lista_de_bolinhas.push( bolinha );
+
+    }
+    
 
 }
 
 function update() {
 
-    updateCreateFromSprite();
+    //updateCreateFromSprite();
 
 }
 
 function render() {
 
-    renderLines();
+    //renderLines();
 
 }

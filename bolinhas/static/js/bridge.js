@@ -1,61 +1,109 @@
+// Util
 
-function randomNumberWithLimit(start, limit){
+var Utils = {};
 
+Utils.random = function (start, limit) {
+    "use strict";
+    
     var number;
 
     do {
         number = Math.floor(Math.random() * limit);
-   
-    while ((number < start) || (number > limit))
+    } while ((number < this.start) || (number > this.limit));
 
-    return number
+    return number;
 
-}
+};
 
-//Funcao que cria as bolinhas
-function createElements(qtd_elements){
+//Example
+//console.log( Utils.random(0, 10) );
+
+// Util fim
+
+// Level
+var level = {};
+
+level.nivel1 = {
+    'qtd' : 6,
+    'balls' : {
+        'ball0' : [3, 4, 5],
+        'ball1' : [2, 3],
+        'ball2' : [3, 5],
+        'ball3' : [4],
+        'ball4' : [],
+        'ball5' : []
+    }
+
+};
+
+// Level fim
+
+// Bolinhas
+
+function Ball(posicao, game, level) {
+    "use strict";
     
-    qtd = qtd_elements;
+    var bolinha, 
+        ligacoes = [], 
+        list_ligacoes = [];
 
-    for (var i = 0; i <= qtd; i++){
-
-        list_ball['bolinha' + i] = game.add.sprite(
-            randomNumberWithLimit(100, 600), 
-            randomNumberWithLimit(100, 600), 
-            'balls', 
-            0
-        );
-
-    }
+    this.init();
 
 }
 
-function createBridge(){
+Ball.prototype.init = function () {
+    "use strict";
 
-    for (i in list_ball){
+    this.addSprite();
+    this.setBall();
+    this.createLine();
 
-        list_bridge['bridge' + i] = [];
+};
 
-        //limite qtd de ligações 
-        var qtd_limit = qtd - 1;
-        //qtd de ligações
-        var qtd_bridges = Math.floor(Math.random() * qtd_limit); 
+Ball.prototype.addSprite = function () {
+    "use strict";
+    
+    this.bolinha = game.add.sprite(
+        Utils.random(100, 600),
+        Utils.random(100, 600),
+        'balls',
+        Utils.random(0, 4)
+    );
 
-        //bolinhas ligadas
-        for (var j = 0; j < qtd_bridges; j++){
+};
 
-            var number;
+Ball.prototype.setBall = function () {
+    "use strict";
+
+    this.bolinha.anchor.set(0.5);
+    this.bolinha.inputEnabled = true;
+    this.bolinha.input.enableDrag(true);
+
+};
+
+Ball.prototype.createLine = function () {
+    "use strict";
+    
+    this.list_ligacoes.push(
+        new Phaser.Line(
+            this.bolinha.x,
+            this.bolinha.y//,
+            //.x,
+            //.y
+        )
+    );
+    
+
+};
+
+//var xx = new Ball();
 
 
-            do {
-                number = Math.floor(Math.random() * limit);
-            }
-            while (number == i)
-                
-            list_bridge['bridge' + i].push(number);
 
-        }
 
-    }
 
-}
+
+
+
+
+
