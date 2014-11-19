@@ -14,11 +14,11 @@
   }
 
   //Funcao que cria as bolinhas
-  function createElements(qtd_elements){
-        
-      qtd = qtd_elements;
+  function createElements(lvl){
 
-      for (var i = 0; i <= qtd; i++){
+      var nivel = level[lvl];
+
+      for (var i = 0; i <= nivel.qtd; i++){
 
           list_ball['bolinha' + i] = game.add.sprite(
               randomNumberWithLimit(100, 600), 
@@ -33,37 +33,22 @@
 
   }
 
-  function createBridge(){
+  function createBridge(lvl){
+
+      var nivel = level[lvl];
+      var number;
 
       for (i in list_ball){
 
           var posicao = 'bridge' + i.replace('bolinha', '');
+          var q = i.replace('bolinha', '');
+
           list_bridge[posicao] = [];
 
-          //limite qtd de ligações 
-          var limit = qtd - 1;
-
-          //qtd de ligações
-          var qtd_bridges = Math.floor(Math.random() * limit); 
-
-          do {
-              qtd_bridges = Math.floor(Math.random() * limit);
-          }
-          while ( qtd_bridges < 1 );
-
           //bolinhas ligadas
-          for (var j = 0; j < qtd_bridges; j++){
+          for ( j in nivel.ligacoes[q]){
 
-              var number;
-
-              do {
-                  number = Math.floor(Math.random() * limit);
-              }
-              //verifica se já existe na lista e se não é ele mesmo
-              while ( 
-                number == i && 
-                list_bridge[posicao].indexOf( number ) != -1 
-              );
+              number = nivel.ligacoes[q][j];
 
               list_bridge[posicao].push(number);
               qtd_ligacoes = qtd_ligacoes + 1;
@@ -76,10 +61,12 @@
 
   }
 
-  function setBolinhaNaTela(){
+  function setBolinhaNaTela(lvl){
+
+    var nivel = level[lvl];
 
     //colocando as bolinhas na tela
-    for (var i = 0; i <= qtd; i++){
+    for (var i = 0; i <= nivel.qtd; i++){
 
         list_ball['bolinha' + i].anchor.set(0.5);
         list_ball['bolinha' + i].inputEnabled = true;
@@ -185,10 +172,40 @@ var list_line = {};
 var list_ball = {};
 var list_bridge = {};
 var list_intersects = {};
-var qtd = 70;
+var qtd = 5;
 var qtd_ligacoes = 0;
 var c = 'rgb(255,255,255)';
 var splash;
+
+var level = {};
+
+level['lvl1'] = {
+    'qtd' : 5,
+    'ligacoes' : {
+        '0' : [3, 4, 5], 
+        '1' : [2, 3], 
+        '2' : [1, 3, 5], 
+        '3' : [4], 
+        '4' : [], 
+        '5' : [], 
+    }
+
+
+};
+
+level['lvl2'] = {
+    'qtd' : 7,
+    'ligacoes' : {
+        '0' : [2, 5, 6, 7], 
+        '1' : [2, 4, 7],
+        '2' : [3, 4],
+        '3' : [4, 6], 
+        '4' : [], 
+        '5' : [7], 
+        '6' : [7], 
+        '7' : [], 
+    }
+};
 
 function create() {
 
@@ -196,12 +213,10 @@ function create() {
     game.add.sprite(0, 0, 'splash');
 
     //Start do jogo
-    /*
-    createElements(qtd);
-    createBridge();
-    setBolinhaNaTela();
+    createElements('lvl2');
+    createBridge('lvl2');
+    setBolinhaNaTela('lvl2');
     criaLinhasEEscreve();
-    */
 
 }
 
