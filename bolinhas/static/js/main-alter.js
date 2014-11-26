@@ -106,6 +106,7 @@
             x['ballB'] = ligacao_ball;
 
             list_line[posicao_line].push(x);
+            list_all_lines.push(x.line);
 
         }
 
@@ -145,6 +146,52 @@
 
   }
 
+  function lineIntersection(lvl){
+
+    var nivel = level[lvl];
+    var intersec = false;
+
+    for ( var i in list_all_lines ){
+
+        var line_base = list_all_lines[i];
+
+        for ( var x in list_all_lines ){
+
+            if ( i == x){
+                continue;
+            }
+            else {
+
+                line_comp = list_all_lines[x];
+
+                var pinta = line_base.intersects(line_comp, true);
+
+                if (pinta){
+                    intersec = true;
+                    break;
+                }
+                else {
+                    intersec = false;
+                }
+
+            }
+
+        }
+
+    }
+
+    if (intersec)
+    {
+        c = 'rgb(0,0,0)';
+    }
+    else
+    {
+        console.log('game finalizado');
+        c = 'rgb(255,255,255)';
+    }
+
+  }
+
 /* Fim Funcões auxiliares */
 
 var game = new Phaser.Game(
@@ -171,7 +218,7 @@ function preload() {
 var list_line = {};
 var list_ball = {};
 var list_bridge = {};
-var list_intersects = {};
+var list_all_lines = [];
 var qtd = 5;
 var qtd_ligacoes = 0;
 var c = 'rgb(255,255,255)';
@@ -180,6 +227,7 @@ var splash;
 var level = {};
 
 level['lvl1'] = {
+/*
     'qtd' : 5,
     'ligacoes' : {
         '0' : [3, 4, 5], 
@@ -189,7 +237,14 @@ level['lvl1'] = {
         '4' : [], 
         '5' : [], 
     }
-
+*/
+    'qtd' : 3,
+    'ligacoes' : {
+        '0' : [1], 
+        '1' : [2], 
+        '2' : [3], 
+        '3' : [], 
+    }
 
 };
 
@@ -213,16 +268,19 @@ function create() {
     game.add.sprite(0, 0, 'splash');
 
     //Start do jogo
-    createElements('lvl2');
-    createBridge('lvl2');
-    setBolinhaNaTela('lvl2');
+    createElements('lvl1');
+    createBridge('lvl1');
+    setBolinhaNaTela('lvl1');
     criaLinhasEEscreve();
-
+console.log(list_line);
+console.log(list_all_lines);
 }
 
 function update() {
 
     updateCreateFromSprite();
+    lineIntersection('lvl1');
+console.log('update');
 
 }
 
