@@ -24,7 +24,7 @@
               randomNumberWithLimit(100, 600), 
               randomNumberWithLimit(100, 600), 
               'balls', 
-              0
+              i
           );
 
       }
@@ -76,7 +76,9 @@
 
   }
 
-  function criaLinhasEEscreve(){
+  function criaLinhasEEscreve(lvl){
+
+    var nivel = level[lvl];
 
     //Criando as linhas
     for ( var i in list_bridge ){
@@ -84,8 +86,9 @@
         var posicao_line = 'line' + i.replace('bridge', '');
         var posicao_ball = 'bolinha' + i.replace('bridge', '');
         var posicao_bridge = i;
+        var li = i.replace('bridge', '');
 
-        list_line[posicao_line] = []
+        list_line[posicao_line] = [];
 
         for ( var j in list_bridge[posicao_bridge] ){
 
@@ -106,9 +109,25 @@
             x['ballB'] = ligacao_ball;
 
             list_line[posicao_line].push(x);
-            list_all_lines.push(x.line);
+
+            lista_de_linhas[
+                posicao_ball.replace('bolinha', '') + 
+                ligacao_ball.replace('bolinha', '')
+            ] = x['line'];
 
         }
+
+    }
+
+  }
+
+  function setLLI(lvl){
+
+    var nivel = level[lvl];
+
+    for ( var i = 0; i <= nivel.qtd; i++ ){
+
+        list_line_intersect['li-' + i] = [];
 
     }
 
@@ -149,36 +168,7 @@
   function lineIntersection(lvl){
 
     var nivel = level[lvl];
-    var intersec = false;
-
-    for ( var i in list_all_lines ){
-
-        var line_base = list_all_lines[i];
-
-        for ( var x in list_all_lines ){
-
-            if ( i == x){
-                continue;
-            }
-            else {
-
-                line_comp = list_all_lines[x];
-
-                var pinta = line_base.intersects(line_comp, true);
-
-                if (pinta){
-                    intersec = true;
-                    break;
-                }
-                else {
-                    intersec = false;
-                }
-
-            }
-
-        }
-
-    }
+    var intersec = verificadorDeLinha(nivel);
 
     if (intersec)
     {
@@ -186,9 +176,34 @@
     }
     else
     {
-        console.log('game finalizado');
         c = 'rgb(255,255,255)';
     }
+
+  }
+
+  function verificadorDeLinha(nivel){
+
+    for ( var i in nivel.verificacoes ){
+
+        var line_base = lista_de_linhas[i];
+
+        for ( var x in nivel.verificacoes[i] ){
+
+            var pinta = null;
+            var item = nivel.verificacoes[i][x];
+            var line_comp = lista_de_linhas[item];
+
+            pinta = line_base.intersects(line_comp, true);
+
+            if (pinta){
+                return true;
+            }
+
+        }
+
+    }
+
+    return false;
 
   }
 
@@ -209,7 +224,7 @@ var game = new Phaser.Game(
 
 function preload() {
 
-    game.load.spritesheet('balls', 'static/img/balls.png', 17, 17);
+    game.load.spritesheet('balls', 'static/img/bolinhas20x20.png', 20, 20);
     game.load.spritesheet('splash', 'static/img/splash.png', 800, 700);
 
 }
@@ -218,7 +233,9 @@ function preload() {
 var list_line = {};
 var list_ball = {};
 var list_bridge = {};
+var list_line_intersect = {};
 var list_all_lines = [];
+var lista_de_linhas = {};
 var qtd = 5;
 var qtd_ligacoes = 0;
 var c = 'rgb(255,255,255)';
@@ -227,7 +244,6 @@ var splash;
 var level = {};
 
 level['lvl1'] = {
-/*
     'qtd' : 5,
     'ligacoes' : {
         '0' : [3, 4, 5], 
@@ -236,16 +252,13 @@ level['lvl1'] = {
         '3' : [4], 
         '4' : [], 
         '5' : [], 
+    },
+    'verificacoes' : {
+        '01' : [], 
+        '12' : [],
+        '23' : [],
+        '30' : []
     }
-*/
-    'qtd' : 3,
-    'ligacoes' : {
-        '0' : [1], 
-        '1' : [2], 
-        '2' : [3], 
-        '3' : [], 
-    }
-
 };
 
 level['lvl2'] = {
@@ -268,19 +281,18 @@ function create() {
     game.add.sprite(0, 0, 'splash');
 
     //Start do jogo
+    setLLI('lvl1');
     createElements('lvl1');
     createBridge('lvl1');
     setBolinhaNaTela('lvl1');
-    criaLinhasEEscreve();
-console.log(list_line);
-console.log(list_all_lines);
+    criaLinhasEEscreve('lvl1');
+
 }
 
 function update() {
 
     updateCreateFromSprite();
     lineIntersection('lvl1');
-console.log('update');
 
 }
 
