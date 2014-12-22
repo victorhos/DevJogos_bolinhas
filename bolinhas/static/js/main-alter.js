@@ -229,20 +229,19 @@ console.log('>>>>>>>>', list_ball);
         lista_de_linhas[i].destroy;
 
     }
-/*
-    list_line = {};
-    list_ball = {};
-    list_bridge = {};
-    list_line_intersect = {};
-    list_all_lines = [];
-    lista_de_linhas = {};
-*/
+
   }
+
   function actionOnClick () {
 
-    console.log('actionOnClick');
-    limpar();
-    //button.destroy();
+    lvl_select = 'lvl' + (parseInt(lvl_select.replace('lvl', '')) + 1);
+
+    if (lvl_select == 'lvl6'){
+        lvl_select == 'lvl1';
+        return false
+    }
+
+    game.state.restart();
 
   }
 
@@ -265,22 +264,22 @@ function preload() {
 
     game.load.spritesheet(
         'balls', 
-        'static/img/bolinhas20x20.png', 
+        'static/img/bolinhas.png', 
         40, 
         40
     );
     game.load.spritesheet(
         'splash', 
-        'static/img/splash.png', 
+        'static/img/Background.png', 
         800, 
         700
     );
 
     game.load.spritesheet(
         'button', 
-        'static/img/button_quadrado_test.png', 
-        50, 
-        50
+        'static/img/botao_nextLevel100x100.png', 
+        100, 
+        100
     );
 
 }
@@ -297,7 +296,7 @@ var qtd_ligacoes = 0;
 var c = 'rgb(255,255,255)';
 var splash;
 var button;
-var lvll = 'lvl1';
+var lvl_select = 'lvl1';
 
 function create() {
 
@@ -305,36 +304,26 @@ function create() {
     game.add.sprite(0, 0, 'splash');
 
     //Start do jogo
-    setLLI('lvl1');
-    createElements('lvl1');
-    createBridge('lvl1');
-    setBolinhaNaTela('lvl1');
-    criaLinhasEEscreve('lvl1');
+    setLLI(lvl_select);
+    createElements(lvl_select);
+    createBridge(lvl_select);
+    setBolinhaNaTela(lvl_select);
+    criaLinhasEEscreve(lvl_select);
 
     button = game.add.button(
-        game.world.centerX, 
-        game.world.centerY, 
+        650, 
+        550, 
         'button', 
         actionOnClick, 
         this, 1, 0, 2
     );
 
-    //  setting the anchor to the center
-    //button.anchor.setTo(0.5, 0.5);
-/*
-console.log(list_line);
-console.log(list_ball);
-console.log(list_bridge);
-console.log(list_line_intersect);
-console.log(list_all_lines);
-console.log(lista_de_linhas);
-*/
 }
 
 function update() {
 
     updateCreateFromSprite();
-    lineIntersection('lvl1');
+    lineIntersection(lvl_select);
 
 }
 
