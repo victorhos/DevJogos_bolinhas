@@ -24,7 +24,7 @@
               randomNumberWithLimit(100, 600), 
               randomNumberWithLimit(100, 600), 
               'balls', 
-              i
+              randomNumberWithLimit(0, nivel.qtd)
           );
 
       }
@@ -207,6 +207,45 @@
 
   }
 
+  function limpar(){
+console.clear();
+    console.log('limpar');
+console.log(list_ball);
+    for (var i = 0; i < list_ball.length; i++){
+console.log(i);
+
+        list_ball['bolinha' + i].anchor.set(0.5);
+        list_ball['bolinha' + i].inputEnabled = false;
+        list_ball['bolinha' + i].input.enableDrag(false);
+        list_ball['bolinha'+i].destroy;
+list_ball['bolinha'+i];
+
+    }
+
+console.log('>>>>>>>>', list_ball);
+
+    for (i in lista_de_linhas){
+
+        lista_de_linhas[i].destroy;
+
+    }
+/*
+    list_line = {};
+    list_ball = {};
+    list_bridge = {};
+    list_line_intersect = {};
+    list_all_lines = [];
+    lista_de_linhas = {};
+*/
+  }
+  function actionOnClick () {
+
+    console.log('actionOnClick');
+    limpar();
+    //button.destroy();
+
+  }
+
 /* Fim Funcões auxiliares */
 
 var game = new Phaser.Game(
@@ -224,8 +263,25 @@ var game = new Phaser.Game(
 
 function preload() {
 
-    game.load.spritesheet('balls', 'static/img/bolinhas20x20.png', 20, 20);
-    game.load.spritesheet('splash', 'static/img/splash.png', 800, 700);
+    game.load.spritesheet(
+        'balls', 
+        'static/img/bolinhas20x20.png', 
+        40, 
+        40
+    );
+    game.load.spritesheet(
+        'splash', 
+        'static/img/splash.png', 
+        800, 
+        700
+    );
+
+    game.load.spritesheet(
+        'button', 
+        'static/img/button_quadrado_test.png', 
+        50, 
+        50
+    );
 
 }
 
@@ -240,40 +296,8 @@ var qtd = 5;
 var qtd_ligacoes = 0;
 var c = 'rgb(255,255,255)';
 var splash;
-
-var level = {};
-
-level['lvl1'] = {
-    'qtd' : 5,
-    'ligacoes' : {
-        '0' : [3, 4, 5], 
-        '1' : [2, 3], 
-        '2' : [1, 3, 5], 
-        '3' : [4], 
-        '4' : [], 
-        '5' : [], 
-    },
-    'verificacoes' : {
-        '01' : [], 
-        '12' : [],
-        '23' : [],
-        '30' : []
-    }
-};
-
-level['lvl2'] = {
-    'qtd' : 7,
-    'ligacoes' : {
-        '0' : [2, 5, 6, 7], 
-        '1' : [2, 4, 7],
-        '2' : [3, 4],
-        '3' : [4, 6], 
-        '4' : [], 
-        '5' : [7], 
-        '6' : [7], 
-        '7' : [], 
-    }
-};
+var button;
+var lvll = 'lvl1';
 
 function create() {
 
@@ -287,6 +311,24 @@ function create() {
     setBolinhaNaTela('lvl1');
     criaLinhasEEscreve('lvl1');
 
+    button = game.add.button(
+        game.world.centerX, 
+        game.world.centerY, 
+        'button', 
+        actionOnClick, 
+        this, 1, 0, 2
+    );
+
+    //  setting the anchor to the center
+    //button.anchor.setTo(0.5, 0.5);
+/*
+console.log(list_line);
+console.log(list_ball);
+console.log(list_bridge);
+console.log(list_line_intersect);
+console.log(list_all_lines);
+console.log(lista_de_linhas);
+*/
 }
 
 function update() {
